@@ -1,0 +1,20 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+</head>
+<body>
+    <h1>Latest News on Trudo</h1>
+    <ul>
+        {% for article in news_data %}
+            <li>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.description }}</p>
+                <a href="{{ article.url }}" target="_blank">Read more</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

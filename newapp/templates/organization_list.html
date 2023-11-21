@@ -1,0 +1,35 @@
+
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization List</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <!-- Содержимое страницы -->
+    <h1>Список организаций</h1>
+
+    {% if organizations %}
+        <ul class="organization-list">
+            {% for organization in organizations %}
+                <li class="organization-list">
+                    <a href="{% url 'organization_info' organization.bank_name %}">{{ forloop.counter }}. {{ organization.bank_name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No organizations available.</p>
+    {% endif %}
+
+    <ul class="organization-list">
+        <li class="organization-list">
+            <a href="{% url 'add_organization' %}">Добавить организацию</a>
+        </li>
+    </ul>
+    
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> News related to {{ bank_name }}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    
+    <header>
+        <h1>Новости с упоминанием {{ bank_name }}</h1>
+        
+    </header>
+    <div class="container">
+        <a href="{% url 'organization_info' bank_name %}" class="back-link">Назад</a>
+    </div>
+
+    <div class="container">
+        <div class="news-container">
+           
+            {% if news %}
+                <ul class="news">
+                    {% for article in news %}
+                        <li>
+                            <strong>{{ article.title }}</strong><br>
+                            {{ article.description }}<br>
+                            <a href="{{ article.url }}" target="_blank">Читать статью</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-news">Упоминаний в новостях нет</p>
+            {% endif %}
+        </div>
+        
+    </div>
+</body>
+</html>

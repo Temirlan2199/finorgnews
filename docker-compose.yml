@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  redis: 
+    image: redis:alpine
+    container_name: redis
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: finOrgNewsDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 112358
+    volumes:
+     - ./data/db:/var/lib/postgresql/data
+
+  app:
+    build: .
+    volumes: 
+      - .:/django
+    ports:
+      - 8000:8000
+    image: app:django
+    container_name: django_container
+    #command: python manage.py runserver 0.0.0.0:8000
+    command: waitress-serve --listen=0.0.0.0:8000 finorg.wsgi:application
+    depends_on: 
+      - db
+  
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A finorg worker -l DEBUG
+    volumes: 
+      - .:/django
+    container_name: celery
+    depends_on:
+      - db
+      - redis
+      - app
+
+  celery-beat:
+    build: .
+    command: celery -A finorg beat --loglevel=info
+    volumes:
+      - .:/django
+    # environment:
+    #   - DJANGO_SETTINGS_MODULE=finorg.settings
+    depends_on:
+      - redis

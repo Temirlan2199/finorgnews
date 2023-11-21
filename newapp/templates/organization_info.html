@@ -1,0 +1,47 @@
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ organization.bank_name }}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Карточка организации {{ organization.bank_name }}</h1>
+    </header>
+    <div class="container">
+            <a href="{% url 'organization_list' %}" class="back-link">Вернуться к списку организаций</a>
+            {% if news %}
+            <a href="{% url 'organization_news' organization.bank_name %}" class="back-link">Посмотреть упоминания в новостях</a>
+            {% else %}
+            <p class="no-news">Нет упоминаний в новостях</p>
+        {% endif %}
+    </div>
+    <div class="container">
+        <div class="organization-details">
+            <p><strong>Председатель Совета директоров:</strong> {{ organization.chairman_SD }}</p>
+            <p><strong>Председатель Правления:</strong> {{ organization.chairman_board }}</p>
+            <p><strong>Совет директоров:</strong> {{ organization.board_members }}</p>
+            <p><strong>Главный бухгалтер:</strong> {{ organization.chief_accountant }}</p>
+            <p><strong>БИН организации:</strong> {{ organization.orgbin }}</p>
+            <p><strong>Адрес (город, улица, дом, квартира):</strong> {{ organization.address }}</p>
+            <p><strong>Телефон:</strong> {{ organization.telephone }}</p>
+            <p><strong>Факс:</strong> {{ organization.fax }}</p>
+            <p><strong>Email:</strong> {{ organization.email }}</p>
+            <p><strong>Web-сайт:</strong> {{ organization.website }}</p>
+            <p><strong>Банк второго уровня:</strong> {{ organization.bank_license }}</p>
+            <p><strong>Кастодиан:</strong> {{ organization.custodian }}</p>
+            <p><strong>Крупные участники:</strong> {{ organization.major_participants }}</p>
+            <p><strong>Брокеры-дилеры:</strong> {{ organization.broker_dealers }}</p>
+            <p><strong>Банковские холдинги:</strong> {{ organization.bank_holdings }}</p>
+        </div>
+
+        
+
+        
+    </div>
+</body>
+</html>
